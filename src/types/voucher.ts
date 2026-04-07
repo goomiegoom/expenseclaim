@@ -11,11 +11,13 @@ export interface Payee {
 export interface VoucherItem {
   id: string;
   description: string;
+  category: string;
   amount: number;
+  taxWithheld: number; // % per item
   note?: string;
 }
 
-export type PaymentMethod = "cash" | "transfer" | "check";
+export type PaymentMethod = "cash" | "transfer" | "check" | "credit";
 export type VoucherStatus = "draft" | "approved" | "paid";
 
 export interface Settings {
@@ -30,27 +32,24 @@ export interface Settings {
 }
 
 export interface Attachments {
-  receipt: boolean;       // ใบเสร็จรับเงิน
-  taxInvoice: boolean;    // ใบกำกับภาษี
-  transferSlip: boolean;  // slip โอนเงิน
-  quotation: boolean;     // ใบเสนอราคา
+  receipt: boolean;
+  taxInvoice: boolean;
+  transferSlip: boolean;
+  quotation: boolean;
   other: boolean;
-  otherDetail: string;    // ระบุ...
+  otherDetail: string;
 }
 
 export interface Voucher {
   voucherNo: string;
   date: string;
   department: string;
-  purpose: string;
   payee: Payee | null;
   items: VoucherItem[];
   paymentMethod: PaymentMethod;
-  taxWithheld: number; // %
   discount: number;
   requestedBy: string;
-  approvedBy: string;
-  paidBy: string;
+  signatureData: string;
   note: string;
   status: VoucherStatus;
   attachments: Attachments;
